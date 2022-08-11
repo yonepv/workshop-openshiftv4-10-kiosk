@@ -5,6 +5,7 @@ commands:
     group:
       isDefault: true
       kind: build
+    hotReloadCapable: false
     workingDir: ${PROJECT_SOURCE}
   id: install
 - exec:
@@ -13,6 +14,7 @@ commands:
     group:
       isDefault: true
       kind: run
+    hotReloadCapable: false
     workingDir: ${PROJECT_SOURCE}
   id: run
 - exec:
@@ -21,6 +23,7 @@ commands:
     group:
       isDefault: true
       kind: debug
+    hotReloadCapable: false
     workingDir: ${PROJECT_SOURCE}
   id: debug
 - exec:
@@ -29,17 +32,23 @@ commands:
     group:
       isDefault: true
       kind: test
+    hotReloadCapable: false
     workingDir: ${PROJECT_SOURCE}
   id: test
 components:
 - container:
+    dedicatedPod: false
     endpoints:
     - name: https-8080
-      targetPort: 8080      
+      secure: false
+      targetPort: 8080
     image: registry.access.redhat.com/ubi8/nodejs-16:latest
     memoryLimit: 1024Mi
     mountSources: true
   name: runtime
+- kubernetes:
+    uri: kubernetes/odo-service-frontend-backend-app.yaml
+  name: frontend-backend-app
 metadata:
   description: Stack with Node.js 14
   displayName: Node.js Runtime
