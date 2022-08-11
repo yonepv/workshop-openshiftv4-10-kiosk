@@ -42,6 +42,11 @@ components:
     - name: https-8080
       secure: false
       targetPort: 8080
+    env:
+    - name: COMPONENT_BACKEND_HOST
+      value: backend-app
+    - name: COMPONENT_BACKEND_PORT
+      value: "8080"
     image: registry.access.redhat.com/ubi8/nodejs-16:latest
     memoryLimit: 1024Mi
     mountSources: true
