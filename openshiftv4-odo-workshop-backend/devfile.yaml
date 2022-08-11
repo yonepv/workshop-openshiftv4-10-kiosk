@@ -34,8 +34,8 @@ commands:
 components:
 - container:
     endpoints:
-    - name: http-3000
-      targetPort: 3000
+    - name: https-8080
+      targetPort: 8080
     image: registry.access.redhat.com/ubi8/nodejs-16:latest
     memoryLimit: 1024Mi
     mountSources: true
