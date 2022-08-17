@@ -1,0 +1,21 @@
+apiVersion: binding.operators.coreos.com/v1alpha1
+kind: ServiceBinding
+metadata:
+  creationTimestamp: null
+  name: frontend-backend-app
+spec:
+  application:
+    group: apps
+    name: frontend-app
+    resource: deployments
+    version: v1
+  bindAsFiles: false
+  detectBindingResources: true
+  services:
+  - group: ""
+    id: backend-app
+    kind: Service
+    name: backend-app
+    version: v1
+status:
+  secret: ""

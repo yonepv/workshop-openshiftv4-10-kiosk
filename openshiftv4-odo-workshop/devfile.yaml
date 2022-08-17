@@ -1,0 +1,74 @@
+commands:
+- exec:
+    commandLine: npm install
+    component: runtime
+    group:
+      isDefault: true
+      kind: build
+    hotReloadCapable: false
+    workingDir: ${PROJECT_SOURCE}
+  id: install
+- exec:
+    commandLine: npm start
+    component: runtime
+    group:
+      isDefault: true
+      kind: run
+    hotReloadCapable: false
+    workingDir: ${PROJECT_SOURCE}
+  id: run
+- exec:
+    commandLine: npm run debug
+    component: runtime
+    group:
+      isDefault: true
+      kind: debug
+    hotReloadCapable: false
+    workingDir: ${PROJECT_SOURCE}
+  id: debug
+- exec:
+    commandLine: npm test
+    component: runtime
+    group:
+      isDefault: true
+      kind: test
+    hotReloadCapable: false
+    workingDir: ${PROJECT_SOURCE}
+  id: test
+components:
+- container:
+    dedicatedPod: false
+    endpoints:
+    - name: https-8080
+      secure: false
+      targetPort: 8080
+    env:
+    - name: COMPONENT_BACKEND_HOST
+      value: backend-app
+    - name: COMPONENT_BACKEND_PORT
+      value: "8080"
+    image: registry.access.redhat.com/ubi8/nodejs-16:latest
+    memoryLimit: 1024Mi
+    mountSources: true
+  name: runtime
+- kubernetes:
+    uri: kubernetes/odo-service-frontend-backend-app.yaml
+  name: frontend-backend-app
+metadata:
+  description: Stack with Node.js 14
+  displayName: Node.js Runtime
+  icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
+  language: javascript
+  name: frontend
+  projectType: nodejs
+  tags:
+  - NodeJS
+  - Express
+  - ubi8
+  version: 1.0.1
+schemaVersion: 2.1.0
+starterProjects:
+- git:
+    remotes:
+      origin: https://github.com/odo-devfiles/nodejs-ex.git
+  name: nodejs-starter
